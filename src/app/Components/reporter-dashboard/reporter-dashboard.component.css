@@ -1,0 +1,19 @@
+.analytics {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .analytics-card {
+    flex: 1;
+  }
+  
+  .reports {
+    margin-top: 32px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  

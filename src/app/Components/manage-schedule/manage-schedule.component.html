@@ -1,0 +1,68 @@
+<h2>Manage Schedules</h2>
+
+<table mat-table [dataSource]="paginatedSchedules" class="mat-elevation-z8">
+  <!-- Schedule ID Column -->
+  <ng-container matColumnDef="scheduleId">
+    <th mat-header-cell *matHeaderCellDef> Schedule ID </th>
+    <td mat-cell *matCellDef="let schedule"> {{ schedule.scheduleId }} </td>
+  </ng-container>
+
+  <!-- Show ID Column -->
+  <ng-container matColumnDef="showId">
+    <th mat-header-cell *matHeaderCellDef> Show ID </th>
+    <td mat-cell *matCellDef="let schedule"> {{ schedule.showId }} </td>
+  </ng-container>
+
+  <!-- Air Date Column -->
+  <ng-container matColumnDef="airDate">
+    <th mat-header-cell *matHeaderCellDef> Air Date </th>
+    <td mat-cell *matCellDef="let schedule">
+      <input matInput [(ngModel)]="schedule.airDate" placeholder="YYYY-MM-DD" />
+    </td>
+  </ng-container>
+
+  <!-- Time Slot Column -->
+  <ng-container matColumnDef="timeSlot">
+    <th mat-header-cell *matHeaderCellDef> Time Slot </th>
+    <td mat-cell *matCellDef="let schedule">
+      <input matInput [(ngModel)]="schedule.timeSlot" placeholder="HH:mm:ss" />
+    </td>
+  </ng-container>
+
+  <!-- Assigned Editor Column -->
+  <ng-container matColumnDef="assignedEditorId">
+    <th mat-header-cell *matHeaderCellDef> Assigned Editor ID </th>
+    <td mat-cell *matCellDef="let schedule">
+      <input matInput [(ngModel)]="schedule.assignedEditorId" />
+    </td>
+  </ng-container>
+
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <td mat-cell *matCellDef="let schedule">
+      <input matInput [(ngModel)]="schedule.status" placeholder="Enter Status" />
+    </td>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let schedule">
+      <button mat-icon-button color="primary" (click)="saveSchedule(schedule)">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteSchedule(schedule)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Header and Row Definitions -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!-- Paginator -->
+<mat-paginator [length]="schedules.length" [pageSize]="pageSize" [pageSizeOptions]="[10]" (page)="onPageChange($event)">
+</mat-paginator>

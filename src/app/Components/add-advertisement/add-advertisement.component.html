@@ -1,0 +1,37 @@
+<h2>Add Advertisement</h2>
+
+<form class="advertisement-form" (ngSubmit)="onSubmit()" #adForm="ngForm">
+  <div class="form-container">
+    <!-- Client Name -->
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Client Name</mat-label>
+      <input matInput type="text" [(ngModel)]="advertisement.clientName" name="clientName" required />
+    </mat-form-field>
+
+    <!-- Slot Time -->
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Slot Time</mat-label>
+      <input matInput type="text" [(ngModel)]="advertisement.slotTime" name="slotTime" placeholder="HH:mm:ss" required />
+    </mat-form-field>
+
+    <!-- Duration -->
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Duration</mat-label>
+      <input matInput type="text" [(ngModel)]="advertisement.duration" name="duration" placeholder="HH:mm:ss" required />
+    </mat-form-field>
+
+    <!-- Rate -->
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Rate</mat-label>
+      <input matInput type="number" [(ngModel)]="advertisement.rate" name="rate" required />
+    </mat-form-field>
+
+    
+    
+  </div>
+
+  <!-- Submit Button -->
+  <div class="button-container">
+    <button mat-raised-button color="primary" type="submit" [disabled]="adForm.invalid">Add Advertisement</button>
+  </div>
+</form>

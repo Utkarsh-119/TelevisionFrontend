@@ -1,0 +1,113 @@
+<h2>Manage Media</h2>
+
+<!-- Search and Filter -->
+<div class="filters">
+  <mat-form-field appearance="outline">
+    <mat-label>Search by File Name</mat-label>
+    <input
+      matInput
+      [(ngModel)]="searchQuery"
+      placeholder="Enter file name"
+      (ngModelChange)="applyFilters()"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Filter by Type</mat-label>
+    <mat-select [(ngModel)]="selectedType" (ngModelChange)="applyFilters()">
+      <mat-option *ngFor="let type of mediaTypes" [value]="type">
+        {{ type }}
+      </mat-option>
+      <mat-option [value]="">All</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<table mat-table [dataSource]="pagedMedia" class="mat-elevation-z8">
+  <!-- Columns -->
+  <ng-container matColumnDef="mediaId">
+    <th mat-header-cell *matHeaderCellDef> Media ID </th>
+    <td mat-cell *matCellDef="let media"> {{ media.mediaId }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fileName">
+    <th mat-header-cell *matHeaderCellDef> File Name </th>
+    <td mat-cell *matCellDef="let media">
+      <ng-container *ngIf="editingMedia?.mediaId === media.mediaId; else viewFileName">
+        <mat-form-field appearance="outline" class="inline-edit">
+          <input matInput [(ngModel)]="editingMedia.fileName" />
+        </mat-form-field>
+      </ng-container>
+      <ng-template #viewFileName>
+        {{ media.fileName }}
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef> Type </th>
+    <td mat-cell *matCellDef="let media">
+      <ng-container *ngIf="editingMedia?.mediaId === media.mediaId; else viewType">
+        <mat-form-field appearance="outline" class="inline-edit">
+          <mat-select [(ngModel)]="editingMedia.type">
+            <mat-option *ngFor="let type of mediaTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+      <ng-template #viewType>
+        {{ media.type }}
+      </ng-template>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="uploadedDate">
+    <th mat-header-cell *matHeaderCellDef> Uploaded Date </th>
+    <td mat-cell *matCellDef="let media"> {{ media.uploadedDate }} </td>
+  </ng-container>
+  <ng-container matColumnDef="tags">
+    <th mat-header-cell *matHeaderCellDef> Tags </th>
+    <td mat-cell *matCellDef="let media">
+      <ng-container *ngIf="editingMedia?.mediaId === media.mediaId; else viewTags">
+        <mat-form-field appearance="outline" class="inline-edit">
+          <input matInput [(ngModel)]="editingMedia.tags" />
+        </mat-form-field>
+      </ng-container>
+      <ng-template #viewTags>
+        {{ media.tags }}
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Actions -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let media">
+      <ng-container *ngIf="editingMedia?.mediaId === media.mediaId; else editDeleteButtons">
+        <button mat-button color="primary" (click)="saveEdit(media)">Save</button>
+        <button mat-button color="warn" (click)="cancelEdit()">Cancel</button>
+      </ng-container>
+      <ng-template #editDeleteButtons>
+        <button mat-icon-button color="primary" (click)="startEdit(media)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteMedia(media)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Table Rows -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!-- Paginator -->
+<mat-paginator
+  [length]="filteredMedia.length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[10]"
+  (page)="onPageChange($event)"
+>
+</mat-paginator>

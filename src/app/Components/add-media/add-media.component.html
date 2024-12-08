@@ -1,0 +1,21 @@
+<h2>Add Media</h2>
+    <form (ngSubmit)="onSubmit()" class="add-media-form">
+      <mat-form-field appearance="outline">
+        <mat-label>File Name</mat-label>
+        <input matInput [(ngModel)]="media.fileName" name="fileName" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Type</mat-label>
+        <input matInput [(ngModel)]="media.type" name="type" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tags (comma-separated)</mat-label>
+        <input matInput [(ngModel)]="media.tags" name="tags" />
+      </mat-form-field>
+
+      
+
+      <button mat-raised-button color="primary" type="submit">Upload</button>
+    </form>

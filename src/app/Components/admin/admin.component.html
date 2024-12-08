@@ -1,0 +1,98 @@
+<!-- admin-page.component.html -->
+<mat-sidenav-container class="sidenav-container">
+    <!-- Sidenav -->
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      [(opened)]="isSidenavOpen"
+      class="side-nav"
+    >
+      <div class="logo">Admin</div>
+      <mat-nav-list>
+
+        <a mat-list-item [routerLink]="['/Admin']">Users</a>
+        
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <!-- Main Content -->
+    <mat-sidenav-content>
+      <div class="top-bar">
+        <button mat-icon-button (click)="toggleSidenav()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        
+        <div class="profile">
+          <button mat-icon-button>
+            <mat-icon>notifications</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </div>
+      </div>
+  
+      <div class="content">
+        <h2>Users Data</h2>
+        <mat-form-field appearance="outline" class="search-bar">
+          <mat-label>Search</mat-label>
+          <input matInput [(ngModel)]="searchValue" placeholder="Search by name or ID" />
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- UserId Column -->
+          <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let user"> {{ user.userId }} </td>
+          </ng-container>
+  
+          <!-- Username Column -->
+          <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef> Username </th>
+            <td mat-cell *matCellDef="let user"> {{ user.username }} </td>
+          </ng-container>
+  
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+          </ng-container>
+  
+          <!-- Role Column -->
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef> Role </th>
+            <td mat-cell *matCellDef="let user">
+              <mat-select [(value)]="user.role" >
+                
+                <mat-option value="Admin">Admin</mat-option>
+                <mat-option value="Channel Manager">Channel Manager</mat-option>
+                <mat-option value="Content Producer">Content Producer</mat-option>
+                <mat-option value="Director">Director</mat-option>
+                <mat-option value="Advertiser">Advertiser</mat-option>
+                <mat-option value="Reporter">Reporter</mat-option>
+              </mat-select>
+            </td>
+          </ng-container>
+  
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let user">
+              <button mat-icon-button color="primary" (click)="updateUser(user)">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteUser(user.userId)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+  
+        <!-- Paginator -->
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

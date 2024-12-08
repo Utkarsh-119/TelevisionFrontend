@@ -1,0 +1,114 @@
+<h2>Manage Advertisements</h2>
+
+<table mat-table [dataSource]="displayedAdvertisements" class="mat-elevation-z8">
+  <!-- Ad ID Column -->
+  <ng-container matColumnDef="adId">
+    <th mat-header-cell *matHeaderCellDef> Ad ID </th>
+    <td mat-cell *matCellDef="let ad"> {{ ad.adId }} </td>
+  </ng-container>
+
+  <!-- Client Name Column -->
+  <ng-container matColumnDef="clientName">
+    <th mat-header-cell *matHeaderCellDef> Client Name </th>
+    <td mat-cell *matCellDef="let ad">
+      <input
+        matInput
+        *ngIf="editingAd?.adId === ad.adId"
+        [(ngModel)]="editingAd.clientName"
+        placeholder="Enter Client Name"
+      />
+      <span *ngIf="editingAd?.adId !== ad.adId">{{ ad.clientName }}</span>
+    </td>
+  </ng-container>
+
+  <!-- Slot Time Column -->
+  <ng-container matColumnDef="slotTime">
+    <th mat-header-cell *matHeaderCellDef> Slot Time </th>
+    <td mat-cell *matCellDef="let ad">
+      <input
+        matInput
+        *ngIf="editingAd?.adId === ad.adId"
+        [(ngModel)]="editingAd.slotTime"
+        placeholder="Enter Slot Time"
+      />
+      <span *ngIf="editingAd?.adId !== ad.adId">{{ ad.slotTime }}</span>
+    </td>
+  </ng-container>
+
+  <!-- Duration Column -->
+  <ng-container matColumnDef="duration">
+    <th mat-header-cell *matHeaderCellDef> Duration </th>
+    <td mat-cell *matCellDef="let ad">
+      <input
+        matInput
+        *ngIf="editingAd?.adId === ad.adId"
+        [(ngModel)]="editingAd.duration"
+        placeholder="Enter Duration"
+      />
+      <span *ngIf="editingAd?.adId !== ad.adId">{{ ad.duration }}</span>
+    </td>
+  </ng-container>
+
+  <!-- Rate Column -->
+  <ng-container matColumnDef="rate">
+    <th mat-header-cell *matHeaderCellDef> Rate </th>
+    <td mat-cell *matCellDef="let ad">
+      <input
+        matInput
+        *ngIf="editingAd?.adId === ad.adId"
+        [(ngModel)]="editingAd.rate"
+        placeholder="Enter Rate"
+      />
+      <span *ngIf="editingAd?.adId !== ad.adId">{{ ad.rate }}</span>
+    </td>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let ad">
+      <button
+        mat-icon-button
+        color="primary"
+        *ngIf="editingAd?.adId === ad.adId"
+        (click)="saveChanges()"
+      >
+        <mat-icon>save</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="warn"
+        *ngIf="editingAd?.adId === ad.adId"
+        (click)="cancelEdit()"
+      >
+        <mat-icon>cancel</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="accent"
+        *ngIf="editingAd?.adId !== ad.adId"
+        (click)="enableEdit(ad)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteAdvertisement(ad.adId)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Table Header and Rows -->
+  <tr mat-header-row *matHeaderRowDef="['adId', 'clientName', 'slotTime', 'duration', 'rate', 'actions']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['adId', 'clientName', 'slotTime', 'duration', 'rate', 'actions']"></tr>
+</table>
+
+<!-- Paginator -->
+<mat-paginator
+  [length]="totalAdvertisements"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 20]"
+  (page)="onPageChange($event)"
+></mat-paginator>
+
+<!-- Add Advertisement Button -->
+
