@@ -6,11 +6,11 @@
   .form-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px; /* Space between form fields */
+    gap: 16px;
   }
   
   .form-field {
-    width: 100%; /* Ensure fields span the full column width */
+    width: 100%;
   }
   
   .button-container {
