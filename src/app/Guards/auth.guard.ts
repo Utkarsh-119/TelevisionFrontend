@@ -8,7 +8,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const tokenData = localStorage.getItem('jwtToken');
 
   if (!tokenData) {
-    // Redirect to login if no token is found
+    
     router.navigate(['/']);
     return false;
   }
@@ -18,7 +18,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     const token = parsedToken?.token;
 
     if (!token) {
-      // If the token is invalid, redirect to login
+     
       router.navigate(['/']);
       return false;
     }
@@ -28,5 +28,5 @@ export const authGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  return true; // Allow access if the token is valid
+  return true;
 };
